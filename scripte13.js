@@ -1,7 +1,11 @@
 const mdp = document.querySelector("#mdp");
 const toggle = document.querySelector("#toggle");
+const len = document.querySelector("#len");
+const bar = document.querySelector("#bar");
+const etat = document.querySelector("#etat");
+const clear = document.querySelector("#clear");
 
-// 1) Toggle afficher/masquer
+// 1) afficher / masquer
 toggle.addEventListener("click", function () {
   if (mdp.type === "password") {
     mdp.type = "text";
@@ -12,17 +16,30 @@ toggle.addEventListener("click", function () {
   }
 });
 
-// 2) Afficher la longueur du mot de passe (dans la console)
+// 2) longueur + barre de "complexité" (juste basé sur la longueur)
 mdp.addEventListener("input", function () {
-  console.log("Longueur :", mdp.value.length);
+  const n = mdp.value.length;
+
+  len.textContent = "Longueur : " + n;
+
+  // barre : 0% à 100% (max à 12 caractères)
+  let pourcent = (n / 12) * 100;
+  if (pourcent > 100) pourcent = 100;
+  bar.style.width = pourcent + "%";
+
+  // texte simple
+  if (n === 0) etat.textContent = "Complexité : —";
+  else if (n < 6) etat.textContent = "Complexité : Faible";
+  else if (n < 10) etat.textContent = "Complexité : Moyen";
+  else etat.textContent = "Complexité : Fort";
 });
 
-// 3) Au focus / blur : changer le bouton
-mdp.addEventListener("focus", function () {
-  toggle.textContent = "👀";
-});
-
-mdp.addEventListener("blur", function () {
-  if (mdp.type === "password") toggle.textContent = "👁";
-  else toggle.textContent = "🙈";
+// 3) interaction visible : bouton effacer
+clear.addEventListener("click", function () {
+  mdp.value = "";
+  len.textContent = "Longueur : 0";
+  bar.style.width = "0%";
+  etat.textContent = "Complexité : —";
+  mdp.type = "password";
+  toggle.textContent = "👁";
 });
