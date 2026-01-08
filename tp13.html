@@ -6,6 +6,11 @@
   <style>
     .wrap { display:flex; gap:8px; align-items:center; }
     #toggle { cursor:pointer; padding:6px 10px; }
+
+    #barBox { width:220px; height:10px; border:1px solid #000; margin-top:10px; }
+    #bar { height:100%; width:0%; background:#000; }
+
+    #len { margin-top:8px; }
   </style>
 </head>
 <body>
@@ -14,6 +19,15 @@
     <input id="mdp" type="password" placeholder="Mot de passe">
     <button id="toggle" type="button">👁</button>
   </div>
+
+  <p id="len">Longueur : 0</p>
+
+  <div id="barBox">
+    <div id="bar"></div>
+  </div>
+  <p id="etat">Complexité : —</p>
+
+  <button id="clear" type="button">Effacer</button>
 
   <script src="scripte13.js"></script>
 </body>
